@@ -1,25 +1,89 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import * as BooksAPI from "./BooksAPI";
+import "./App.css";
+import { useState, useEffect } from "react";
+import Book from "./Book";
+import { Link } from "react-router-dom";
 
-function App() {
+const BooksApp = () => {
+  const [allBooks, setAllBooks] = useState([]);
+
+  useEffect(() => {
+    BooksAPI.getAll().then((value) => setAllBooks(value));
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="list-books">
+        <div className="list-books-title">
+          <h1>MyReads</h1>
+        </div>
+        <div className="list-books-content">
+          <div>
+            <div className="bookshelf">
+              <h2 className="bookshelf-title">Currently Reading</h2>
+              <div className="bookshelf-books">
+                <ol className="books-grid">
+                  {allBooks
+                    .filter((book) => book.shelf === "currentlyReading")
+                    .map((filteredBook) => (
+                      <li key={filteredBook.id}>
+                        <Book
+                          id={filteredBook.id}
+                          backgroundImage={filteredBook.previewLink}
+                          author={filteredBook.Authors}
+                          title={filteredBook.title}
+                        />
+                      </li>
+                    ))}
+                  {console.log(allBooks)}
+                </ol>
+              </div>
+            </div>
+            <div className="bookshelf">
+              <h2 className="bookshelf-title">Want to Read</h2>
+              <div className="bookshelf-books">
+                <ol className="books-grid">
+                  {allBooks
+                    .filter((book) => book.shelf === "wantToRead")
+                    .map((filteredBook) => (
+                      <li key={filteredBook.id}>
+                        <Book
+                          id={filteredBook.id}
+                          backgroundImage={filteredBook.previewLink}
+                          author={filteredBook.Authors}
+                          title={filteredBook.title}
+                        />
+                      </li>
+                    ))}
+                </ol>
+              </div>
+            </div>
+            <div className="bookshelf">
+              <h2 className="bookshelf-title">Read</h2>
+              <div className="bookshelf-books">
+                <ol className="books-grid">
+                  {allBooks
+                    .filter((book) => book.shelf === "read")
+                    .map((filteredBook) => (
+                      <li key={filteredBook.id}>
+                        <Book
+                          id={filteredBook.id}
+                          backgroundImage={filteredBook.previewLink}
+                          author={filteredBook.Authors}
+                          title={filteredBook.title}
+                        />
+                      </li>
+                    ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="open-search">
+          <Link to="/Search">Add a book</Link>
+        </div>
+      </div>
     </div>
   );
-}
-
-export default App;
+};
+export default BooksApp;
