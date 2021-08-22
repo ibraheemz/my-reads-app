@@ -7,11 +7,9 @@ import { Redirect, useHistory } from "react-router-dom";
 const Book = ({ id, backgroundImage, author, title }) => {
   const [shelf, setShelf] = useState("");
 
-  let history = useHistory();
-
+  const reload = () => setTimeout(() => window.location.reload(), 400);
   useEffect(() => {
     BooksAPI.update(id, shelf);
-    history.push("/");
   }, [shelf]);
 
   return (
@@ -29,6 +27,7 @@ const Book = ({ id, backgroundImage, author, title }) => {
           <select
             onChange={(e) => {
               setShelf(e.target.value);
+              reload();
             }}
           >
             <option value="move" disabled>
