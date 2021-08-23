@@ -7,10 +7,10 @@ import { Link } from "react-router-dom";
 
 const BooksApp = () => {
   const [allBooks, setAllBooks] = useState([]);
-
-  useEffect(() => {
+  const updateState = () =>
     BooksAPI.getAll().then((value) => setAllBooks(value));
-  }, []);
+  updateState();
+
   return (
     <div className="app">
       <div className="list-books">
@@ -32,6 +32,7 @@ const BooksApp = () => {
                           backgroundImage={filteredBook.previewLink}
                           author={filteredBook.Authors}
                           title={filteredBook.title}
+                          updateBooksShelf={() => updateState}
                         />
                       </li>
                     ))}
@@ -52,6 +53,7 @@ const BooksApp = () => {
                           backgroundImage={filteredBook.previewLink}
                           author={filteredBook.Authors}
                           title={filteredBook.title}
+                          updateBooksShelf={() => updateState}
                         />
                       </li>
                     ))}
@@ -71,6 +73,7 @@ const BooksApp = () => {
                           backgroundImage={filteredBook.previewLink}
                           author={filteredBook.Authors}
                           title={filteredBook.title}
+                          updateBooksShelf={() => updateState}
                         />
                       </li>
                     ))}

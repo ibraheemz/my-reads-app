@@ -2,15 +2,19 @@ import { useState, useEffect } from "react";
 import React from "react";
 import "./App.css";
 import * as BooksAPI from "./BooksAPI";
-import { Redirect, useHistory } from "react-router-dom";
 
-const Book = ({ id, backgroundImage, author, title }) => {
+const Book = ({ id, backgroundImage, author, title, updateBooksShelf }) => {
   const [shelf, setShelf] = useState("");
+  const [updatedBooks, setUpdatedBooks] = useState(false);
 
-  const reload = () => setTimeout(() => window.location.reload(), 400);
+  // const reload = () => setTimeout(() => window.location.reload(), 400);
   useEffect(() => {
     BooksAPI.update(id, shelf);
+    setUpdatedBooks(!updatedBooks);
   }, [shelf]);
+  useEffect(() => {
+    updateBooksShelf();
+  }, [updateBooksShelf]);
 
   return (
     <div className="book">
@@ -27,7 +31,6 @@ const Book = ({ id, backgroundImage, author, title }) => {
           <select
             onChange={(e) => {
               setShelf(e.target.value);
-              reload();
             }}
           >
             <option value="move" disabled>
