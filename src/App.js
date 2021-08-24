@@ -10,7 +10,6 @@ const BooksApp = () => {
   const updateState = () =>
     BooksAPI.getAll().then((value) => setAllBooks(value));
   updateState();
-
   return (
     <div className="app">
       <div className="list-books">
@@ -29,10 +28,10 @@ const BooksApp = () => {
                       <li key={filteredBook.id}>
                         <Book
                           id={filteredBook.id}
-                          backgroundImage={filteredBook.previewLink}
+                          backgroundImage={filteredBook.imageLinks.thumbnail}
                           author={filteredBook.Authors}
                           title={filteredBook.title}
-                          updateBooksShelf={() => updateState}
+                          updateBooksShelf={() => updateState()}
                         />
                       </li>
                     ))}
@@ -50,7 +49,7 @@ const BooksApp = () => {
                       <li key={filteredBook.id}>
                         <Book
                           id={filteredBook.id}
-                          backgroundImage={filteredBook.previewLink}
+                          backgroundImage={filteredBook.imageLinks.thumbnail}
                           author={filteredBook.Authors}
                           title={filteredBook.title}
                           updateBooksShelf={() => updateState}
@@ -70,7 +69,7 @@ const BooksApp = () => {
                       <li key={filteredBook.id}>
                         <Book
                           id={filteredBook.id}
-                          backgroundImage={filteredBook.previewLink}
+                          backgroundImage={filteredBook.imageLinks.thumbnail}
                           author={filteredBook.Authors}
                           title={filteredBook.title}
                           updateBooksShelf={() => updateState}

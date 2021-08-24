@@ -5,16 +5,14 @@ import * as BooksAPI from "./BooksAPI";
 
 const Book = ({ id, backgroundImage, author, title, updateBooksShelf }) => {
   const [shelf, setShelf] = useState("");
-  const [updatedBooks, setUpdatedBooks] = useState(false);
 
   // const reload = () => setTimeout(() => window.location.reload(), 400);
   useEffect(() => {
     BooksAPI.update(id, shelf);
-    setUpdatedBooks(!updatedBooks);
   }, [shelf]);
   useEffect(() => {
     updateBooksShelf();
-  }, [updateBooksShelf]);
+  }, [shelf]);
 
   return (
     <div className="book">
