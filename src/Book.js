@@ -8,11 +8,12 @@ const Book = ({
     imageLinks: { thumbnail },
     authors,
     title,
+    shelf,
   },
   onBookUpdate,
 }) => {
   onBookUpdate !== true
-    ? (onBookUpdate = (id, shelf) => BooksAPI.update(id, shelf))
+    ? (onBookUpdate = (id, newShelf) => BooksAPI.update(id, newShelf))
     : (onBookUpdate = onBookUpdate);
   return (
     <div className="book">
@@ -26,16 +27,17 @@ const Book = ({
           }}
         />
         <div className="book-shelf-changer">
-          <select onChange={(e) => onBookUpdate(id, e.target.value)}>
+          <select
+            onChange={(e) => onBookUpdate(id, e.target.value)}
+            value={shelf}
+          >
             <option value="move" disabled>
               Move to...
             </option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
             <option value="read">Read</option>
-            <option value="none" selected="true">
-              None
-            </option>
+            <option value="none">None</option>
           </select>
         </div>
       </div>

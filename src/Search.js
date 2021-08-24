@@ -11,7 +11,7 @@ const Search = () => {
   useEffect(() => {
     BooksAPI.search(query).then((res) => setSearchResults(res));
   }, [query]);
-
+  console.log(searchResults); // these results has the books without a shelf prop.
   return (
     <div className="search-books">
       <div className="search-books-bar">
