@@ -27,10 +27,7 @@ const BooksApp = () => {
                     .map((filteredBook) => (
                       <li key={filteredBook.id}>
                         <Book
-                          id={filteredBook.id}
-                          backgroundImage={filteredBook.imageLinks.thumbnail}
-                          author={filteredBook.Authors}
-                          title={filteredBook.title}
+                          book={filteredBook}
                           updateBooksShelf={() => updateState()}
                         />
                       </li>
@@ -48,10 +45,7 @@ const BooksApp = () => {
                     .map((filteredBook) => (
                       <li key={filteredBook.id}>
                         <Book
-                          id={filteredBook.id}
-                          backgroundImage={filteredBook.imageLinks.thumbnail}
-                          author={filteredBook.Authors}
-                          title={filteredBook.title}
+                          book={filteredBook}
                           updateBooksShelf={() => updateState}
                         />
                       </li>
@@ -68,10 +62,7 @@ const BooksApp = () => {
                     .map((filteredBook) => (
                       <li key={filteredBook.id}>
                         <Book
-                          id={filteredBook.id}
-                          backgroundImage={filteredBook.imageLinks.thumbnail}
-                          author={filteredBook.Authors}
-                          title={filteredBook.title}
+                          book={filteredBook}
                           updateBooksShelf={() => updateState}
                         />
                       </li>

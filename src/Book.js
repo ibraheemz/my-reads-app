@@ -3,9 +3,17 @@ import React from "react";
 import "./App.css";
 import * as BooksAPI from "./BooksAPI";
 
-const Book = ({ id, backgroundImage, author, title, updateBooksShelf }) => {
+const Book = ({
+  book: {
+    id,
+    imageLinks: { thumbnail },
+    authors,
+    title,
+  },
+  updateBooksShelf,
+}) => {
   const [shelf, setShelf] = useState("");
-
+  // const {id, imageLinks, author, title, updateBooksShelf} = Book
   // const reload = () => setTimeout(() => window.location.reload(), 400);
   useEffect(() => {
     BooksAPI.update(id, shelf);
@@ -22,7 +30,7 @@ const Book = ({ id, backgroundImage, author, title, updateBooksShelf }) => {
           style={{
             width: 128,
             height: 193,
-            backgroundImage: `url(${backgroundImage})`,
+            backgroundImage: `url(${thumbnail})`,
           }}
         />
         <div className="book-shelf-changer">
@@ -44,7 +52,9 @@ const Book = ({ id, backgroundImage, author, title, updateBooksShelf }) => {
         </div>
       </div>
       <div className="book-title">{title}</div>
-      <div className="book-authors">{author}</div>
+      {authors.map((author) => (
+        <div className="book-authors">{authors}</div>
+      ))}
     </div>
   );
 };
