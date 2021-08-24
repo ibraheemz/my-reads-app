@@ -1,15 +1,22 @@
 import React from "react";
 import * as BooksAPI from "./BooksAPI";
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Book from "./Book";
 import { Link } from "react-router-dom";
+import Search from "./Search";
 
 const BooksApp = () => {
   const [allBooks, setAllBooks] = useState([]);
+
   const updateState = () =>
     BooksAPI.getAll().then((value) => setAllBooks(value));
   updateState();
+
+  const onBookUpdate = (id, shelf) => {
+    BooksAPI.update(id, shelf);
+    updateState();
+  };
   return (
     <div className="app">
       <div className="list-books">
@@ -29,6 +36,7 @@ const BooksApp = () => {
                         <Book
                           book={filteredBook}
                           updateBooksShelf={() => updateState()}
+                          onBookUpdate={onBookUpdate}
                         />
                       </li>
                     ))}
@@ -47,6 +55,7 @@ const BooksApp = () => {
                         <Book
                           book={filteredBook}
                           updateBooksShelf={() => updateState}
+                          onBookUpdate={onBookUpdate}
                         />
                       </li>
                     ))}
@@ -64,6 +73,7 @@ const BooksApp = () => {
                         <Book
                           book={filteredBook}
                           updateBooksShelf={() => updateState}
+                          onBookUpdate={onBookUpdate}
                         />
                       </li>
                     ))}

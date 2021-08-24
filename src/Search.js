@@ -11,8 +11,6 @@ const Search = () => {
   useEffect(() => {
     BooksAPI.search(query).then((res) => setSearchResults(res));
   }, [query]);
-  console.log(query);
-  console.log(searchResults);
 
   return (
     <div className="search-books">
@@ -39,12 +37,7 @@ const Search = () => {
             ) : searchResults.length ? (
               searchResults.map((book) => (
                 <li key={book.id}>
-                  <Book
-                    id={book.id}
-                    backgroundImage={book.previewLink}
-                    author={book.Authors}
-                    title={book.title}
-                  />
+                  <Book book={book} />
                 </li>
               ))
             ) : (

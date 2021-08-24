@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import React from "react";
 import "./App.css";
 import * as BooksAPI from "./BooksAPI";
@@ -10,18 +9,11 @@ const Book = ({
     authors,
     title,
   },
-  updateBooksShelf,
+  onBookUpdate,
 }) => {
-  const [shelf, setShelf] = useState("");
-  // const {id, imageLinks, author, title, updateBooksShelf} = Book
-  // const reload = () => setTimeout(() => window.location.reload(), 400);
-  useEffect(() => {
-    BooksAPI.update(id, shelf);
-  }, [shelf]);
-  useEffect(() => {
-    updateBooksShelf();
-  }, [shelf]);
-
+  onBookUpdate !== true
+    ? (onBookUpdate = (id, shelf) => BooksAPI.update(id, shelf))
+    : (onBookUpdate = onBookUpdate);
   return (
     <div className="book">
       <div className="book-top">
@@ -34,11 +26,7 @@ const Book = ({
           }}
         />
         <div className="book-shelf-changer">
-          <select
-            onChange={(e) => {
-              setShelf(e.target.value);
-            }}
-          >
+          <select onChange={(e) => onBookUpdate(id, e.target.value)}>
             <option value="move" disabled>
               Move to...
             </option>
@@ -52,9 +40,7 @@ const Book = ({
         </div>
       </div>
       <div className="book-title">{title}</div>
-      {authors.map((author) => (
-        <div className="book-authors">{authors}</div>
-      ))}
+      <div className="book-authors">{authors.join(",")}</div>
     </div>
   );
 };
