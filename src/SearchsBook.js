@@ -1,10 +1,41 @@
+// import React, { useState, useEffect } from "react";
 import "./App.css";
-const Book = ({
+import * as BooksAPI from "./BooksAPI";
+const SearchsBook = ({
   book,
   book: { id, imageLinks, authors, title, shelf },
-  onBookUpdate,
-  updateBooksShelf,
+  homeBooksWithShelf,
 }) => {
+  const onBookUpdate = (id, newShelf) => BooksAPI.update(id, newShelf);
+
+  //filter out the home books to get the book that is passed here from the search component
+
+  //     homeBooks.length &&
+  //     setBookWithShelf(homeBooks.filter((item) => item.id === book.id));
+
+  //   if (homeBooks.filter((item) => item.id === book.id)) {
+  //     setBookWithShelf(homeBooks.filter((item) => item.id === book.id));
+  //   } else {
+  //     setBookWithShelf([]);
+  //   }
+
+  //   homeBooks.forEach((item) => {
+  //     item.id === book.id && setResultShelf(item.shelf);
+  //   });
+
+  //   homeBooksWithShelf.forEach((item) => {
+  //     if (book.id === item.id) {
+  //       book.shelf = item.shelf;
+  //     } else book.shelf = "none";
+  //   });
+
+  const bookWithShelf =
+    homeBooksWithShelf &&
+    homeBooksWithShelf.filter((item) => item.id === book.id);
+  bookWithShelf.length >= 1
+    ? (book.shelf = bookWithShelf[0].shelf)
+    : (book.shelf = "none");
+
   return (
     <div className="book">
       <div className="book-top">
@@ -31,7 +62,6 @@ const Book = ({
           <select
             onChange={(e) => {
               onBookUpdate(id, e.target.value);
-              setTimeout(() => updateBooksShelf(), 350);
             }}
             value={shelf}
           >
@@ -51,4 +81,4 @@ const Book = ({
   );
 };
 
-export default Book;
+export default SearchsBook;

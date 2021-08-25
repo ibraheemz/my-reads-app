@@ -4,14 +4,26 @@ import { useState, useEffect } from "react";
 import * as BooksAPI from "./BooksAPI";
 import Book from "./Book";
 import "./App.css";
+import SearchsBook from "./SearchsBook";
 
 const Search = () => {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [homeBooks, setHomeBooks] = useState("");
+
   useEffect(() => {
     BooksAPI.search(query).then((res) => setSearchResults(res));
+    BooksAPI.getAll().then((books) => setHomeBooks(books));
   }, [query]);
-  console.log(searchResults); // these results has the books without a shelf prop.
+  const homeBooksWithShelf = [];
+  homeBooks &&
+    homeBooks.map((item) =>
+      homeBooksWithShelf.push({ id: item.id, shelf: item.shelf })
+    );
+
+  // console.log(searchResults); // these results has the books without a shelf prop.
+
+  // console.log(query);
   return (
     <div className="search-books">
       <div className="search-books-bar">
@@ -37,7 +49,10 @@ const Search = () => {
             ) : searchResults.length ? (
               searchResults.map((book) => (
                 <li key={book.id}>
-                  <Book book={book} />
+                  <SearchsBook
+                    book={book}
+                    homeBooksWithShelf={homeBooksWithShelf}
+                  />
                 </li>
               ))
             ) : (
