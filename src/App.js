@@ -1,21 +1,27 @@
 import React from "react";
 import * as BooksAPI from "./BooksAPI";
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Book from "./Book";
 import { Link } from "react-router-dom";
 import Search from "./Search";
 
 const BooksApp = () => {
   const [allBooks, setAllBooks] = useState([]);
-
+  const shelves = [
+    { title: "Currently Reading", key: "currentlyReading" },
+    { title: "Want To Read", key: "wantToRead" },
+    { title: "Read", key: "read" },
+  ];
   const updateState = () =>
     BooksAPI.getAll().then((value) => setAllBooks(value));
-  updateState();
+
+  useEffect(() => {
+    updateState();
+  }, []);
 
   const onBookUpdate = (id, shelf) => {
     BooksAPI.update(id, shelf);
-    updateState();
   };
   return (
     <div className="app">
@@ -25,61 +31,27 @@ const BooksApp = () => {
         </div>
         <div className="list-books-content">
           <div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Currently Reading</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                  {allBooks
-                    .filter((book) => book.shelf === "currentlyReading")
-                    .map((filteredBook) => (
-                      <li key={filteredBook.id}>
-                        <Book
-                          book={filteredBook}
-                          updateBooksShelf={() => updateState()}
-                          onBookUpdate={onBookUpdate}
-                        />
-                      </li>
-                    ))}
-                  {console.log(allBooks)}
-                </ol>
+            {shelves.map((shelf) => (
+              <div className="bookshelf">
+                <h2 className="bookshelf-title">{shelf.title}</h2>
+                <div className="bookshelf-books">
+                  <ol className="books-grid">
+                    {allBooks
+                      .filter((book) => book.shelf === shelf.key)
+                      .map((filteredBook) => (
+                        <li key={filteredBook.id}>
+                          <Book
+                            book={filteredBook}
+                            updateBooksShelf={updateState}
+                            onBookUpdate={onBookUpdate}
+                          />
+                        </li>
+                      ))}
+                    {console.log(allBooks)}
+                  </ol>
+                </div>
               </div>
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Want to Read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                  {allBooks
-                    .filter((book) => book.shelf === "wantToRead")
-                    .map((filteredBook) => (
-                      <li key={filteredBook.id}>
-                        <Book
-                          book={filteredBook}
-                          updateBooksShelf={() => updateState}
-                          onBookUpdate={onBookUpdate}
-                        />
-                      </li>
-                    ))}
-                </ol>
-              </div>
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                  {allBooks
-                    .filter((book) => book.shelf === "read")
-                    .map((filteredBook) => (
-                      <li key={filteredBook.id}>
-                        <Book
-                          book={filteredBook}
-                          updateBooksShelf={() => updateState}
-                          onBookUpdate={onBookUpdate}
-                        />
-                      </li>
-                    ))}
-                </ol>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
         <div className="open-search">

@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import * as BooksAPI from "./BooksAPI";
-
 const Book = ({
   book: {
     id,
@@ -11,10 +10,12 @@ const Book = ({
     shelf,
   },
   onBookUpdate,
+  updateBooksShelf,
 }) => {
   onBookUpdate !== true
     ? (onBookUpdate = (id, newShelf) => BooksAPI.update(id, newShelf))
     : (onBookUpdate = onBookUpdate);
+  console.log(shelf);
   return (
     <div className="book">
       <div className="book-top">
@@ -28,7 +29,10 @@ const Book = ({
         />
         <div className="book-shelf-changer">
           <select
-            onChange={(e) => onBookUpdate(id, e.target.value)}
+            onChange={(e) => {
+              onBookUpdate(id, e.target.value);
+              setTimeout(() => updateBooksShelf(), 350);
+            }}
             value={shelf}
           >
             <option value="move" disabled>
