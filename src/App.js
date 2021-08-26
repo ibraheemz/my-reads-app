@@ -4,7 +4,6 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import Book from "./Book";
 import { Link } from "react-router-dom";
-import Search from "./Search";
 
 const BooksApp = () => {
   const [allBooks, setAllBooks] = useState([]);
@@ -20,8 +19,8 @@ const BooksApp = () => {
     updateState();
   }, []);
 
-  const onBookUpdate = (id, shelf) => {
-    BooksAPI.update(id, shelf);
+  const onBookUpdate = async (id, shelf) => {
+    await BooksAPI.update(id, shelf).then(() => updateState());
   };
   return (
     <div className="app">
@@ -32,22 +31,20 @@ const BooksApp = () => {
         <div className="list-books-content">
           <div>
             {shelves.map((shelf) => (
-              <div className="bookshelf">
+              <div className="bookshelf" key={shelf.key}>
                 <h2 className="bookshelf-title">{shelf.title}</h2>
                 <div className="bookshelf-books">
                   <ol className="books-grid">
                     {allBooks
                       .filter((book) => book.shelf === shelf.key)
-                      .map((filteredBook) => (
-                        <li key={filteredBook.id}>
+                      .map((filteredBook, index) => (
+                        <li key={`unq-key ${index}`}>
                           <Book
                             book={filteredBook}
-                            updateBooksShelf={updateState}
                             onBookUpdate={onBookUpdate}
                           />
                         </li>
                       ))}
-                    {console.log(allBooks)}
                   </ol>
                 </div>
               </div>

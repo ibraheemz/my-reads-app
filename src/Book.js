@@ -1,9 +1,10 @@
 import "./App.css";
+import PropTypes from "prop-types";
+
 const Book = ({
   book,
   book: { id, imageLinks, authors, title, shelf },
   onBookUpdate,
-  updateBooksShelf,
 }) => {
   return (
     <div className="book">
@@ -31,7 +32,6 @@ const Book = ({
           <select
             onChange={(e) => {
               onBookUpdate(id, e.target.value);
-              setTimeout(() => updateBooksShelf(), 350);
             }}
             value={shelf}
           >
@@ -49,6 +49,11 @@ const Book = ({
       <div className="book-authors">{authors && authors.join(",")}</div>
     </div>
   );
+};
+
+Book.propTypes = {
+  book: PropTypes.object,
+  onBookUpdate: PropTypes.func,
 };
 
 export default Book;

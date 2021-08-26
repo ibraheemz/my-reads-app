@@ -8,27 +8,6 @@ const SearchsBook = ({
 }) => {
   const onBookUpdate = (id, newShelf) => BooksAPI.update(id, newShelf);
 
-  //filter out the home books to get the book that is passed here from the search component
-
-  //     homeBooks.length &&
-  //     setBookWithShelf(homeBooks.filter((item) => item.id === book.id));
-
-  //   if (homeBooks.filter((item) => item.id === book.id)) {
-  //     setBookWithShelf(homeBooks.filter((item) => item.id === book.id));
-  //   } else {
-  //     setBookWithShelf([]);
-  //   }
-
-  //   homeBooks.forEach((item) => {
-  //     item.id === book.id && setResultShelf(item.shelf);
-  //   });
-
-  //   homeBooksWithShelf.forEach((item) => {
-  //     if (book.id === item.id) {
-  //       book.shelf = item.shelf;
-  //     } else book.shelf = "none";
-  //   });
-
   const bookWithShelf =
     homeBooksWithShelf &&
     homeBooksWithShelf.filter((item) => item.id === book.id);

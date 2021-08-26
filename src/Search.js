@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import * as BooksAPI from "./BooksAPI";
-import Book from "./Book";
 import "./App.css";
 import SearchsBook from "./SearchsBook";
 
@@ -21,9 +20,6 @@ const Search = () => {
       homeBooksWithShelf.push({ id: item.id, shelf: item.shelf })
     );
 
-  // console.log(searchResults); // these results has the books without a shelf prop.
-
-  // console.log(query);
   return (
     <div className="search-books">
       <div className="search-books-bar">
