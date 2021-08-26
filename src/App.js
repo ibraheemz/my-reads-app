@@ -19,8 +19,11 @@ const BooksApp = () => {
     updateState();
   }, []);
 
-  const onBookUpdate = async (id, shelf) => {
-    await BooksAPI.update(id, shelf).then(() => updateState());
+  const onBookUpdate = async (book, shelf) => {
+    await BooksAPI.update(book.id, shelf).then(() => {
+      book.shelf = shelf;
+      setAllBooks(allBooks.filter((b) => b.id !== book.id).concat([book]));
+    });
   };
   return (
     <div className="app">

@@ -31,7 +31,7 @@ const Book = ({
         <div className="book-shelf-changer">
           <select
             onChange={(e) => {
-              onBookUpdate(id, e.target.value);
+              onBookUpdate(book, e.target.value);
             }}
             value={shelf}
           >
